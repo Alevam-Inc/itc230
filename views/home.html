@@ -1,0 +1,16 @@
+<html>
+<link rel="stylesheet" href="/css/main.css">
+
+<body>
+<h2>Home</h2>
+<h3>Search for movies</h3>
+<form method="POST" action="/detail">
+    <input type="text" name="title" placeholder="title" required maxlength="100">
+    <button>Search</button>
+</form>
+<hr>
+<h3>Our film catalog</h3>
+{{#each catalog}}
+    <li><a href="/detail?title={{title}}">{{title}}</a></li>
+{{/each}}
+</body>

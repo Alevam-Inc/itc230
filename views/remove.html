@@ -1,0 +1,12 @@
+<html>
+    <body>
+        <a href="/">Home</a>
+{{#if result.removed}}
+    <h2>"{{title}}" was removed from the catalog.</h2>
+    remaining films: {{result.total}}
+{{else}}
+    <h2>"{{title}}" was not found in the catalog</h2>
+{{/if}}
+
+    </body>
+</html>
