@@ -27,5 +27,15 @@
     "mongoose": "^5.6.4",
     "parser": "^0.1.4",
     "query-string": "^6.8.1"
-  }
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "eslint": "^6.0.1",
+    "eslint-plugin-react": "^7.14.2",
+    "mocha": "^6.2.0"
+  },
+  "scripts": {
+    "lint": "eslint **/*.js",
+    "test": "mocha test/**"
+} 
 }

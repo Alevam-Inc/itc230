@@ -1,7 +1,6 @@
 'use strict'
 
-const film = require("./lib/movies.js");
-
+const film = require("./lib/movies");
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
@@ -45,6 +44,24 @@ app.post('/detail', function(req,res){
   console.log(req.body)
   var found = film.get(req.body.title);
   res.render("detail", {title: req.body.title, result: found, catalog: film.getAll()});
+});
+
+app.get('/addform', (req,res) => {
+  res.render('addform');
+});
+
+app.post('/add', (req,res) => {
+  let title = req.body.title;
+  let year = req.body.year;
+  let country = req.body.country;
+  let director = req.body.director;
+  let studio = req.body.studio;
+  let newObject = {title, year, country, director, studio}
+  let result = film.add(newObject);
+  res.render('add', {
+      film: req.body,
+      result: result
+      });
 });
 
  // define 404 handler
