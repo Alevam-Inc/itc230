@@ -21,7 +21,7 @@ const mySchema = mongoose.Schema({
  year: String,
  country: String,
  director: String,
- Studio: String
+ studio: String
 }); 
 
 module.exports = mongoose.model('Movie', mySchema);

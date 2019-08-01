@@ -1,9 +1,10 @@
 'use strict'
 
-const film = require("./lib/movies");
+const Film = require("./movies");
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
+
 
 app.set('port', process.env.PORT || 3000);
 app.use(express.static(__dirname + '/public')); // set location for static files
@@ -14,7 +15,12 @@ app.engine(".html", handlebars({extname: '.html', defaultLayout: false}));
 app.set("view engine", ".html");
 
 app.get('/', (req,res) => {
-  res.render('home', {catalog: film.getAll()});
+  Film.getAll().then((items) => {
+    console.log(items)
+    res.render('home',{films: items}); 
+  }).catch((err) =>{
+    return next(err);
+  });
  });
 
 // send plain text response
@@ -24,26 +30,27 @@ app.get('/about', function(req, res){
  });
  
  app.get('/remove', function(req,res){
-  let result = film.remove(req.query.title);
+  let result = Film.remove(req.query.title);
   res.render('remove', {title: req.query.title, result: result });
  });
 
  // send content of 'home' view
  app.get('/detail', function(req,res){
-  console.log(req.query)
-  var found = film.get(req.query.title);
-  res.render("detail", {
+   Film.get(req.query.title).then((result) =>{
+     console.log(result)
+    res.render("detail", {
       title: req.query.title, 
-      result: found
-      }
-  );
+      result: result
+      });
+   });
+  
 });
 
 // handle POST
 app.post('/detail', function(req,res){
   console.log(req.body)
   var found = film.get(req.body.title);
-  res.render("detail", {title: req.body.title, result: found, catalog: film.getAll()});
+  res.render("detail", {title: req.body.title, result: found, films: film.getAll()});
 });
 
 app.get('/addform', (req,res) => {
@@ -57,7 +64,9 @@ app.post('/add', (req,res) => {
   let director = req.body.director;
   let studio = req.body.studio;
   let newObject = {title, year, country, director, studio}
-  let result = film.add(newObject);
+  console.log(req.body)
+  let result = Film.add(req.body);
+  console.log(result)
   res.render('add', {
       film: req.body,
       result: result

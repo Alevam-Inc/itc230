@@ -4,14 +4,13 @@
 <h2>Details for "{{title}}"</h2>
   {{#if result}}
     <p>
-    {{ result.title }} is a {{ result.year }}
-     {{ result.country }} film directed by {{ result.director }} and released by {{ result.studio }}.
+    {{ result.title }} is a {{ result.year }} {{ result.country }} film directed by {{ result.director }} and released by {{ result.studio }}.
   </p>
     {{else}}
     <h3>"{{title}}" was not found in the catalog</h3>
 {{/if}}
 <a href="/remove?title={{title}}">
-  Click here to remove this film.
+  Click here to remove this film from the catalog.
 </a>
 </body>
 </html>
