@@ -28,7 +28,7 @@ exports.get = (title) => {
 };
 
 exports.remove = (title) => {
-    return Film.remove({title}, (err, result) => {
+    return Film.deleteOne({title}, (err, result) => {
         // output error if one occurred
         if (err) {
             console.log(err);

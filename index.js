@@ -73,6 +73,34 @@ app.post('/add', (req,res) => {
       });
 });
 
+//API routes
+app.get('/api/movies', (req,res) => {
+  Film.getAll().then((items) => {
+    res.json(items); 
+  }).catch((err) =>{
+    return next(err);
+  });
+ });
+
+ app.get('/api/movies/:title', function(req,res){
+  Film.get(req.params.title).then((result) =>{
+    console.log(result)
+   res.json(result);
+  });
+});
+
+app.get('/api/movies/remove/:title', function(req,res){
+   Film.remove(req.params.title).then((item) =>{
+     res.json(item)
+   });
+});
+
+app.post('/api/movies/add/', (req,res,next) => {
+    computers.update({'title':req.body.title}, req.body, {upsert:true}, (err, result) => {
+        console.log(result);
+        res.json({/*updated: result.nModified,*/ title: req.body.title});
+    })
+});
  // define 404 handler
 app.use( (req,res) => {
   res.type('text/plain'); 
