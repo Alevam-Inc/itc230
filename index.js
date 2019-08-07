@@ -96,7 +96,7 @@ app.get('/api/movies/remove/:title', function(req,res){
 });
 
 app.post('/api/movies/add/', function(req,res) {
-    Film.update({'title':req.body.title}, req.body, {upsert:true}, (err, result) => {
+    Film.add(req.body).then((result) =>{
         console.log(result);
         res.json({/*updated: result.nModified,*/ title: req.body.title});
     })

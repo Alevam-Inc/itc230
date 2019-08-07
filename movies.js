@@ -42,7 +42,13 @@ exports.remove = (title) => {
 exports.add = (newFilm) => {
     console.log(newFilm)
  //   var newFilm = {title, year, country, director, studio}
-    Film.update({'title':newFilm.title}, newFilm, {upsert:true}, (err, result) => {
+    return Film.update({
+    'title':newFilm.title,
+    'year':newFilm.year,
+    'country':newFilm.country,
+    'director':newFilm.director,
+    'studio':newFilm.studio},
+    newFilm, {upsert:true}, (err, result) => {
         if (err) return next(err);
         console.log(result);
     });
