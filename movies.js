@@ -27,20 +27,19 @@ exports.get = (title) => {
     });
 };
 
-exports.remove = (title) => {
-    return Film.deleteOne({title}, (err, result) => {
+exports.remove = (id) => {
+    return Film.deleteOne({_id:id}, (err, result) => {
         // output error if one occurred
-        if (err) {
-            console.log(err);
+        if (err) {;
         } else {
             // otherwise output the array of documents
+            console.log(result)
             return result;
         }
     });
 };
 
 exports.add = (newFilm) => {
-    console.log(newFilm)
  //   var newFilm = {title, year, country, director, studio}
     return Film.update({
     'title':newFilm.title,
@@ -50,6 +49,7 @@ exports.add = (newFilm) => {
     'studio':newFilm.studio},
     newFilm, {upsert:true}, (err, result) => {
         if (err) return next(err);
-        console.log(result);
+        console.log(result)
+        return result;
     });
 };

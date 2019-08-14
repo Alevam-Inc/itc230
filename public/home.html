@@ -1,9 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Home</title>
+        <title>ITC 230 domo Page</title>
+        <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
     </head>
     <body>
-        <p>My Home Page</p>
+        <div id="root">
+            <script type="text/babel">
+            const Welcome = (props) => {
+                console.log(props)
+                return <h1>Hello, {props.name}</h1>
+            }
+                React.DOM.reader( <welcome name="jim"></welcome>,
+                document.getElementById('root'));
+                </script>
+            </div>
     </body>
 </html>

@@ -9,15 +9,19 @@ const app = express();
 app.set('port', process.env.PORT || 3000);
 app.use(express.static(__dirname + '/public')); // set location for static files
 app.use(bodyParser.urlencoded({extended: true})); // parse form submissions
+app.use(bodyParser.json());
 
 const handlebars =  require("express-handlebars");
 app.engine(".html", handlebars({extname: '.html', defaultLayout: false}));
 app.set("view engine", ".html");
 
+
+
 app.get('/', (req,res) => {
   Film.getAll().then((items) => {
     console.log(items)
-    res.render('home',{films: items}); 
+    //res.render('home',{films: items});
+    res.render('home-test',{films: JSON.stringify(items)}); 
   }).catch((err) =>{
     return next(err);
   });
@@ -30,7 +34,7 @@ app.get('/about', function(req, res){
  });
  
  app.get('/remove', function(req,res){
-  let result = Film.remove(req.query.title);
+  let result = Film.remove(req.query.id);
   res.render('remove', {title: req.query.title, result: result });
  });
 
@@ -89,8 +93,8 @@ app.get('/api/movies', (req,res) => {
   });
 });
 
-app.get('/api/movies/remove/:title', function(req,res){
-   Film.remove(req.params.title).then((item) =>{
+app.get('/api/movies/remove/:id', function(req,res){
+   Film.remove(req.params.id).then((item) =>{
      res.json(item)
    });
 });
@@ -98,7 +102,11 @@ app.get('/api/movies/remove/:title', function(req,res){
 app.post('/api/movies/add/', function(req,res) {
     Film.add(req.body).then((result) =>{
         console.log(result);
-        res.json({/*updated: result.nModified,*/ title: req.body.title});
+        if (result.upserted) {
+          res.json({"_id": result.upserted[0]._id})
+        } else {
+          res.json({});
+        }
     })
 });
  // define 404 handler
